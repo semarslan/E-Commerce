@@ -6,6 +6,6 @@ Technologies
 * MongoDB
 * ElasticSearch
 * Lombok
-* Vue.js
+* React.js
 
 Not Finished...
