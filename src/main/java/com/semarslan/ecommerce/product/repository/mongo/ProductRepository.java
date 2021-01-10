@@ -1,4 +1,4 @@
-package com.semarslan.ecommerce.product.repository;
+package com.semarslan.ecommerce.product.repository.mongo;
 
 import com.semarslan.ecommerce.product.entity.Product;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;

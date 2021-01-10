@@ -20,7 +20,7 @@ public class ProductEs {
     private CompanyEs seller;
     private String feature;
     private BigDecimal price;
-    private CategoryEs categoryId;
+    private CategoryEs category;
     private Boolean active;
 
 }

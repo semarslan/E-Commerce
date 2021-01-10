@@ -15,7 +15,6 @@ import java.util.List;
 @EqualsAndHashCode(of = "id")
 public class Product {
 
-    @Id
     private String id;
     private String name;
     private String code;

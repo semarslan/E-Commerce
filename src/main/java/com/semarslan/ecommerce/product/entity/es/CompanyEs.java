@@ -1,5 +1,8 @@
 package com.semarslan.ecommerce.product.entity.es;
 
+import lombok.Data;
+
+@Data
 public class CompanyEs {
 
     private String id;

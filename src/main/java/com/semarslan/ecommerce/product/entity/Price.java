@@ -13,7 +13,7 @@ public class Price {
 
     private String id;
     private String productId;
-    private String money;
+    private MoneyType moneyType;
     private String price;
 
 }
