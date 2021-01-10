@@ -1,56 +1,66 @@
 <template>
-  <div >
-    <v-card
-        :loading="loading"
-        class="mx-auto my-12"
-        max-width="374"
-        v-for="(item,index) in items" :key="index"
-    >
-      <template slot="progress">
-        <v-progress-linear
-            color="deep-purple"
-            height="10"
-            indeterminate
-        ></v-progress-linear>
-      </template>
-
-      <v-img
-          height="250"
-          :src="item.image"
-      ></v-img>
-
-      <v-card-title>{{ item.title }}</v-card-title>
-
-      <v-card-text>
-        <v-row
-            align="center"
-            class="mx-0"
+  <div>
+    <v-container>
+      <v-row>
+        <v-card
+            :loading="loading"
+            class="mx-auto my-12"
+            max-width="374"
+            v-for="(item,index) in items" :key="index"
         >
-        </v-row>
+        <v-col>
+          <template slot="progress">
+            <v-progress-linear
+                color="deep-purple"
+                height="10"
+                indeterminate
+            ></v-progress-linear>
+          </template>
 
-        <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
-      </v-card-text>
+          <v-img
+              height="250"
+              :src="item.image"
+          ></v-img>
 
-      <v-divider class="mx-4"></v-divider>
+          <v-card-title>{{ item.title }}</v-card-title>
 
-      <v-card-title>{{item.freeDelivery}}</v-card-title>
+          <v-card-text>
+            <v-row
+                align="center"
+                class="mx-0"
+            >
+            </v-row>
 
-      <v-card-text>
-        {{ item.available }}
-        {{ item.deliveryIn }}
-        {{ item.features}}
-        {{ item.price}}
-      </v-card-text>
+            <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
+          </v-card-text>
 
-      <v-card-actions>
-        <v-btn
-            color="deep-purple lighten-2"
-            @click="reserve"
-        >
-          Buy Now
-        </v-btn>
-      </v-card-actions>
-    </v-card>
+          <v-divider class="mx-4"></v-divider>
+
+<!--          <v-card-title>{{item.freeDelivery}}</v-card-title>-->
+        </v-col>
+          <v-col>
+            <v-card-actions>
+              <v-btn
+                  color="deep-purple lighten-2"
+                  @click="reserve"
+                  small
+              >
+                Buy Now <v-icon small>mdi-credit-card-outline</v-icon>
+              </v-btn>
+              <v-btn
+                  color="primary lighten-2"
+                  @click="reserve"
+                  small
+              >
+                Add To Cart <v-icon small>mdi-basket</v-icon>
+              </v-btn>
+            </v-card-actions>
+          </v-col>
+
+        </v-card>
+      </v-row>
+    </v-container>
+
   </div>
 
 </template>
