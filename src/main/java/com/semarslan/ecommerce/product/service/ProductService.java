@@ -1,6 +1,8 @@
 package com.semarslan.ecommerce.product.service;
 
 import com.semarslan.ecommerce.product.entity.MoneyType;
+import com.semarslan.ecommerce.product.entity.Product;
+import com.semarslan.ecommerce.product.entity.ProductImage;
 import com.semarslan.ecommerce.product.entity.es.ProductEs;
 import com.semarslan.ecommerce.product.model.ProductResponse;
 import com.semarslan.ecommerce.product.model.ProductSaveRequest;
@@ -10,8 +12,10 @@ import com.semarslan.ecommerce.product.repository.es.ProductEsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,22 +25,42 @@ public class ProductService {
      * productRepo'ya insert edilen herşeyi
      * elastic search'e update geçilecek.
      */
-    private final ProductEsRepository productEsRepository;
     private final ProductRepository productRepository;
     private final ProductPriceService productPriceService;
     private final ProductDeliveryService productDeliveryService;
     private final ProductAmountService productAmountService;
     private final ProductImageService productImageService;
+    private final ProductEsService productEsService;
 
 
     public Flux<ProductResponse> getAll() {
-        return productEsRepository.findAll().map(this::mapToDto);
+        return productEsService.findAll().map(this::mapToDto);
     }
 
 
-    ProductResponse save(ProductSaveRequest productSaveRequest) {
-        return null;
+    /**
+     * mongo insert
+     * es update
+     * redis update
+     * @param request
+     * @return
+     */
+    public ProductResponse save(ProductSaveRequest request) {
+        Product product = Product.builder()
+                .active(Boolean.TRUE)
+                .code("PR001")
+                .categoryId(request.getCategoryId())
+                .companyId(request.getSellerId())
+                .description(request.getDescription())
+                .feature(request.getFeatures())
+                .name(request.getName())
+                .productImage(request.getImages().stream()
+                        .map(item -> new ProductImage(ProductImage.ImageType.FEATURE, item)).collect(Collectors.toList()))
+                .build();
 
+        product = productRepository.save(product).block();
+
+        return this.mapToDto(productEsService.saveNewProduct(product).block());
     }
 
     /**
@@ -48,6 +72,10 @@ public class ProductService {
      * @return
      */
     private ProductResponse mapToDto(ProductEs productEs) {
+        if (productEs == null) {
+            return null;
+        }
+
         BigDecimal productPrice = productPriceService.getByMoneyType(productEs.getId(), MoneyType.USD);
         return ProductResponse.builder()
                 .price(productPrice)
@@ -63,5 +91,9 @@ public class ProductService {
                 .image(productImageService.getProductMainImage(productEs.getId()))
                 .seller(ProductSellerResponse.builder().id(productEs.getSeller().getId()).name(productEs.getSeller().getName()).build())
                 .build();
+    }
+
+    public Mono<Long> count() {
+        return productRepository.count();
     }
 }

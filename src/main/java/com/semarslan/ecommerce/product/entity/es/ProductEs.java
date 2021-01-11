@@ -1,5 +1,6 @@
 package com.semarslan.ecommerce.product.entity.es;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
+@Builder
 public class ProductEs {
 
     private String id;
