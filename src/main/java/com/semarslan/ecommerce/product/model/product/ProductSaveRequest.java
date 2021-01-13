@@ -1,4 +1,4 @@
-package com.semarslan.ecommerce.product.model;
+package com.semarslan.ecommerce.product.model.product;
 
 import com.semarslan.ecommerce.product.entity.MoneyType;
 import lombok.Builder;

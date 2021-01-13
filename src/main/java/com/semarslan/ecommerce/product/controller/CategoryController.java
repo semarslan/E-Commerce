@@ -1,7 +1,7 @@
 package com.semarslan.ecommerce.product.controller;
 
-import com.semarslan.ecommerce.product.model.product.ProductResponse;
-import com.semarslan.ecommerce.product.service.ProductService;
+import com.semarslan.ecommerce.product.model.category.CategoryResponse;
+import com.semarslan.ecommerce.product.service.category.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,16 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
+
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/category")
 @RequiredArgsConstructor
 @CrossOrigin("*")
-public class ProductController {
+public class CategoryController {
 
-    private final ProductService productService;
+    private final CategoryService categoryService;
 
     @GetMapping
-    public Flux<ProductResponse> getAllProducts() {
-        return productService.getAll();
+    public Flux<CategoryResponse> getAll() {
+        return categoryService.getAll();
     }
 }

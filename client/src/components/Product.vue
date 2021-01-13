@@ -42,7 +42,7 @@
                       color="primary"
                       v-bind:href="item.seller.id"
                   >
-                    {{ item.seller.id }}
+                    {{ item.seller.name }}
                   </v-btn>
                   <v-list-item-title>Features</v-list-item-title>
                   {{ item.features }}
