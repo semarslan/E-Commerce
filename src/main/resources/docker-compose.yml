@@ -16,3 +16,19 @@ services:
       - 9300:9300
     environment:
       - discovery.type=single-node
+
+  logstash:
+    image: library/logstash:7.10.1
+    ports:
+      - 5000:5000
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    image: kibana:7.10.1
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch

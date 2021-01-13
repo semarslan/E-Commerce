@@ -33,10 +33,7 @@ public class ProductDemoData {
                         .moneyType(MoneyType.USD)
                         .categoryId(UUID.randomUUID().toString())
                         .name("Product Name " + item)
-                        .features("<li>Black Color</li>\n" +
-                                "                        <li>Aliminum Case</li>\n" +
-                                "                        <li>2 Years Warrantly</li>\n" +
-                                "                        <li>5 Inc</li>")
+                        .features("6 Plate, 6 Soup Bowl, 3 Platter, 6 Cups")
                         .price(BigDecimal.ONE)
                         .images(List.of("https://cdn.vuetifyjs.com/images/cards/cooking.png"))
                         .build());
