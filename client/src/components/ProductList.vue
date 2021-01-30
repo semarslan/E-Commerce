@@ -54,7 +54,7 @@
 
             <v-card-title>Free Delivery:  {{ item.freeDelivery }}</v-card-title>
             <v-card-title>Delivery in : {{ item.deliveryIn }}</v-card-title>
-            <v-card-title> {{ item.price }} {{ item.moneyType }}</v-card-title>
+            <v-card-title> {{ item.price }} {{ item.moneySymbol }}</v-card-title>
           </v-col>
           <v-col>
             <v-card-actions>
@@ -86,10 +86,10 @@
 </template>
 
 <script>
-import {get} from "@/common/api";
+import {getAll} from "@/common/product-service";
 
 export default {
-  name: "Product",
+  name: "ProductList",
   components: {},
   props: {},
   created() {
@@ -104,7 +104,7 @@ export default {
   methods: {
 
     getProducts() {
-      get('products').then(response => {
+      getAll().then(response => {
         this.products = response.data;
       })
     },

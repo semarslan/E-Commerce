@@ -1,6 +1,5 @@
 package com.semarslan.ecommerce.product.model.product;
 
-import com.semarslan.ecommerce.product.entity.MoneyType;
 import com.semarslan.ecommerce.product.model.ProductSellerResponse;
 import lombok.Builder;
 import lombok.Data;
@@ -22,5 +21,5 @@ public class ProductResponse {
     private String deliveryIn;
     private BigDecimal price;
     private String categoryId;
-    private MoneyType moneyType;
+    private String moneySymbol;
 }

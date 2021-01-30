@@ -33,6 +33,7 @@ public class ProductEsService {
                         .feature(product.getFeature())
                         .id(product.getId())
                         .name(product.getName())
+                        .price(product.getPrice())
                         // TODO get company name and code
                         .seller(CompanyEs.builder().id(product.getCompanyId()).name("Test").build())
                         .category(getProductCategory(product.getCategoryId()))

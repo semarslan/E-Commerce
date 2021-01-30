@@ -1,5 +1,6 @@
 package com.semarslan.ecommerce.product.service;
 
+import com.semarslan.ecommerce.product.entity.MoneyTypes;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,8 +13,8 @@ public class ProductDeliveryService {
         return "Tomorrow";
     }
 
-    public boolean freeDeliveryCheck(String productId, BigDecimal price){
+    public boolean freeDeliveryCheck(String productId, BigDecimal price, MoneyTypes moneyType){
         //TODO
-        return price.compareTo(BigDecimal.ONE) >= 0;
+        return true;
     }
 }

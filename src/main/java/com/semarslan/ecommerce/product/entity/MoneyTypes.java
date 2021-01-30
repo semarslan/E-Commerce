@@ -3,7 +3,7 @@ package com.semarslan.ecommerce.product.entity;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum MoneyType {
+public enum MoneyTypes {
     USD("Dolar", "$"),
     EUR("Euro", "E"),
     TL("Türk Lirası", "T");
@@ -11,4 +11,9 @@ public enum MoneyType {
     private String label;
     private String symbol;
 
+
+
+    public String getSymbol() {
+        return symbol;
+    }
 }

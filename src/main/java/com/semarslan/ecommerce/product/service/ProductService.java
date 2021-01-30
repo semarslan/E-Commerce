@@ -1,6 +1,6 @@
 package com.semarslan.ecommerce.product.service;
 
-import com.semarslan.ecommerce.product.entity.MoneyType;
+import com.semarslan.ecommerce.product.entity.MoneyTypes;
 import com.semarslan.ecommerce.product.entity.Product;
 import com.semarslan.ecommerce.product.entity.ProductImage;
 import com.semarslan.ecommerce.product.entity.es.ProductEs;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.math.BigDecimal;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +24,6 @@ public class ProductService {
      * elastic search'e update geçilecek.
      */
     private final ProductRepository productRepository;
-    private final ProductPriceService productPriceService;
     private final ProductDeliveryService productDeliveryService;
     private final ProductAmountService productAmountService;
     private final ProductImageService productImageService;
@@ -53,6 +51,7 @@ public class ProductService {
                 .description(request.getDescription())
                 .feature(request.getFeatures())
                 .name(request.getName())
+                .price(request.getPrice())
                 .productImage(request.getImages().stream()
                         .map(item -> new ProductImage(ProductImage.ImageType.FEATURE, item)).collect(Collectors.toList()))
                 .build();
@@ -75,9 +74,10 @@ public class ProductService {
             return null;
         }
 
-        BigDecimal productPrice = productPriceService.getByMoneyType(productEs.getId(), MoneyType.USD);
         return ProductResponse.builder()
-                .price(productPrice)
+                //TODO client üzerinden validate edilecek.
+                .price(productEs.getPrice().get("USD"))
+                .moneySymbol(MoneyTypes.USD.getSymbol())
                 .name(productEs.getName())
                 .features(productEs.getFeature())
                 .id(productEs.getId())
@@ -85,8 +85,7 @@ public class ProductService {
                 .deliveryIn(productDeliveryService.getDeliveryInfo(productEs.getId()))
                 .categoryId(productEs.getCategory().getId())
                 .available(productAmountService.getByProductId(productEs.getId()))
-                .freeDelivery(productDeliveryService.freeDeliveryCheck(productEs.getId(), productPrice))
-                .moneyType(MoneyType.USD)
+                .freeDelivery(productDeliveryService.freeDeliveryCheck(productEs.getId(), productEs.getPrice().get("USD"), MoneyTypes.USD))
                 .image(productImageService.getProductMainImage(productEs.getId()))
                 .seller(ProductSellerResponse.builder().id(productEs.getSeller().getId()).name(productEs.getSeller().getName()).build())
                 .build();
